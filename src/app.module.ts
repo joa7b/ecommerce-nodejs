@@ -1,10 +1,25 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { SequelizeModule } from '@nestjs/sequelize';
+
+import * as databaseConfig from '../database/config';
+import { modelsArray } from './models';
+
+const config = new ConfigService();
+const environmentName = config.get<string>('NODE_ENV') || 'development';
+const databaseOptions = databaseConfig[environmentName];
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    SequelizeModule.forRoot({
+      ...databaseOptions,
+      models: modelsArray,
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+  ],
+  controllers: [],
+  providers: [ConfigService],
 })
-export class AppModule {}
+export class AppModule { }
