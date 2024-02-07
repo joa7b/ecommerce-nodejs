@@ -52,27 +52,4 @@ export const test = {
   },
 };
 
-export const production = {
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  sync: false,
-  define: {
-    underscored: true,
-    charset: 'utf8mb4',
-    dialectOptions: {
-      collate: 'utf8mb4_general_ci',
-    },
-    timestamps: true,
-  },
-  dialect: 'mysql',
-  dialectOptions: {
-    bigNumberStrings: false,
-  },
-  logging: false,
-  seederStorage: 'sequelize',
-  seederStorageTableName: 'sequelize_data',
-  migrationStorageTableName: 'sequelize_meta',
-};
+export const production = {};
