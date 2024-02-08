@@ -41,7 +41,7 @@ npm run db:seed:all
 Para rodar a aplicação:
 
 ```bash
-npm start
+npm run start
 ```
 
 ## Testes Automatizados
@@ -49,7 +49,7 @@ npm start
 Para executar os testes automatizados:
 
 ```bash
-npm test
+npm run test
 ```
 
 
