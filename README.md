@@ -57,6 +57,3 @@ npm run test
 
 - `npm run db:drop` e `npm run db:drop:test`: excluem o banco de dados
 - Outros comandos úteis para auxiliar no desenvolvimento da API estão no arquivo `package.json`.
-
-Lembre-se de corrigir os erros e melhorar a semântica conforme necessário.
-
