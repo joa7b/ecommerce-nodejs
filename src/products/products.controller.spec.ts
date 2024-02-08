@@ -6,6 +6,7 @@ import { testModule } from '../../test/test-module';
 import { ProductsController } from './products.controller';
 
 import { Product } from './models/product.model';
+import { Order } from '../orders/models/order.model';
 
 describe('productsController', () => {
   let sequelize: Sequelize;
@@ -18,6 +19,10 @@ describe('productsController', () => {
     sequelize = module.get<Sequelize>(Sequelize);
 
     controller = module.get<ProductsController>(ProductsController);
+
+    Order.destroy({
+      where: {},
+    });
 
     productParams = {
       name: 'Product 1',

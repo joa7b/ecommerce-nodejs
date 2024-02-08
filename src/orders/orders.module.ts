@@ -6,7 +6,7 @@ import { OrdersService } from './orders.service';
 
 import { ordersProviders } from './orders.provider';
 
-import { ProductsModule } from 'src/products/products.module';
+import { ProductsModule } from '../products/products.module';
 
 @Module({
   imports: [ProductsModule],

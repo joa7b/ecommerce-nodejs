@@ -6,11 +6,13 @@ import { testModule } from '../../test/test-module';
 import { OrdersController } from './orders.controller';
 
 import { Order } from './models/order.model';
+import { Product } from '../products/models/product.model';
 
 describe('OrdersController', () => {
   let sequelize: Sequelize;
   let controller: OrdersController;
   let orderParams: any;
+  let productParams: any;
 
   beforeAll(async () => {
     const module: TestingModule = await testModule();
@@ -19,15 +21,25 @@ describe('OrdersController', () => {
 
     controller = module.get<OrdersController>(OrdersController);
 
+    productParams = {
+      name: 'Product 1',
+      description: 'Product 1 description',
+      price: 2500,
+      stockQuantity: 10,
+    };
+
     orderParams = {
       customerCode: 1,
-      products: [1, 2, 3],
+      products: [],
       totalAmount: 7500,
       status: 'PENDING',
     }
   });
 
   afterEach(async () => {
+    await Product.destroy({
+      where: {},
+    });
     await Order.destroy({
       where: {},
     });
@@ -42,7 +54,8 @@ describe('OrdersController', () => {
   });
 
   it('should create an order', async () => {
-    const order: Order = await controller.createOrder(orderParams);
+    const product: Product = await Product.create<Product>(productParams);
+    const order: Order = await controller.createOrder({...orderParams, products: [product.code]});
 
     expect(order).toBeDefined();
     expect(order.customerCode).toBe(orderParams.customerCode);
@@ -51,7 +64,8 @@ describe('OrdersController', () => {
   });
 
   it('should get orders', async () => {
-    const order: Order = await controller.createOrder(orderParams);
+    const product: Product = await Product.create<Product>(productParams);
+    const order: Order = await controller.createOrder({...orderParams, products: [product.code]});
     const orders: Order[] = await controller.getOrders();
 
     expect(orders).toBeDefined();
@@ -59,7 +73,8 @@ describe('OrdersController', () => {
   });
 
   it('should get an order', async () => {
-    const order: Order = await controller.createOrder(orderParams);
+    const product: Product = await Product.create<Product>(productParams);
+    const order: Order = await controller.createOrder({...orderParams, products: [product.code]});
     const orderFound: Order = await controller.getOrder(order.code);
 
     expect(orderFound).toBeDefined();
@@ -67,7 +82,8 @@ describe('OrdersController', () => {
   });
 
   it('should update an order', async () => {
-    const order: Order = await controller.createOrder(orderParams);
+    const product: Product = await Product.create<Product>(productParams);
+    const order: Order = await controller.createOrder({...orderParams, products: [product.code]});
     const orderUpdated: Order = await controller.updateOrder({ status: 'PAID' }, order.code);
 
     expect(orderUpdated).toBeDefined();
@@ -75,7 +91,8 @@ describe('OrdersController', () => {
   });
 
   it('should delete an order', async () => {
-    const order: Order = await controller.createOrder(orderParams);
+    const product: Product = await Product.create<Product>(productParams);
+    const order: Order = await controller.createOrder({...orderParams, products: [product.code]});
     await controller.deleteOrder(order.code);
 
     const orderFound: Order = await controller.getOrder(order.code);

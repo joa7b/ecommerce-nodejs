@@ -1,9 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
 
 import { Order } from './models/order.model';
-import { Product } from 'src/products/models/product.model';
+import { Product } from '../products/models/product.model';
 
-import { ProductsService } from 'src/products/products.service';
+import { ProductsService } from '../products/products.service';
 
 @Injectable()
 export class OrdersService {
@@ -23,7 +23,6 @@ export class OrdersService {
       ...createOrderDto,
       status: 'PENDING',
     });
-
     const products: Product[] = await this.productsService.getProductsByCodes(createOrderDto.products);
 
     if (!products.length) {

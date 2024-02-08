@@ -1,7 +1,7 @@
 import { Table, Column, Model, DataType, BelongsToMany } from 'sequelize-typescript';
 
-import { Product } from 'src/products/models/product.model';
-import { OrderProduct } from 'src/orders_products/models/order_product.model';
+import { Product } from '../../products/models/product.model';
+import { OrderProduct } from '../../orders_products/models/order_product.model';
 
 @Table({
   tableName: 'orders',
