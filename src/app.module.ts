@@ -5,6 +5,10 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import * as databaseConfig from '../database/config';
 import { modelsArray } from './models';
 
+import { ProductsModule } from './products/products.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
 const config = new ConfigService();
 const environmentName = config.get<string>('NODE_ENV') || 'development';
 const databaseOptions = databaseConfig[environmentName];
@@ -18,8 +22,14 @@ const databaseOptions = databaseConfig[environmentName];
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    ProductsModule,
   ],
-  controllers: [],
-  providers: [ConfigService],
+  controllers: [
+    AppController,
+  ],
+  providers: [
+    ConfigService, 
+    AppService
+  ],
 })
 export class AppModule { }

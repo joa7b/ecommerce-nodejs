@@ -1,3 +1,5 @@
+import { Product } from "./products/models/product.model";
 
-
-export const modelsArray = [];
+export const modelsArray = [
+  Product,
+];
