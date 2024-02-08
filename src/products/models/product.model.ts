@@ -1,4 +1,7 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, BelongsToMany } from 'sequelize-typescript';
+
+import { Order } from 'src/orders/models/order.model';
+import { OrderProduct } from 'src/orders_products/models/order_product.model';
 
 @Table({
   tableName: 'products',
@@ -36,6 +39,9 @@ export class Product extends Model<Product> {
     allowNull: false,
   })
   stockQuantity: number;
+  
+  @BelongsToMany(() => Order, () => OrderProduct)
+  orders: Order[];
 
   @Column({
     type: DataType.DATE,

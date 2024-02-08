@@ -2,11 +2,21 @@ import { Injectable, Inject } from '@nestjs/common';
 
 import { Product } from './models/product.model';
 
+import { CreateProductDto } from './dto/create-product.dto';
+
 @Injectable()
 export class ProductsService {
   constructor(@Inject('PRODUCTS_REPOSITORY') private productsRepository: typeof Product) { }
 
-  async createProduct(createProductDto: any): Promise<Product> {
+  async createProduct(createProductDto: CreateProductDto): Promise<Product> {
+    if (createProductDto.price < 0) {
+      throw new Error('Price must be greater than 0');
+    };
+
+    if (createProductDto.stockQuantity < 0) {
+      throw new Error('Stock must be greater than 0');
+    };
+
     return await this.productsRepository.create<Product>(createProductDto);
   }
 
@@ -18,6 +28,14 @@ export class ProductsService {
     return await this.productsRepository.findOne({
       where: {
         code,
+      }
+    });
+  }
+
+  async getProductsByCodes(codes: number[]): Promise<Product[]> {
+    return await this.productsRepository.findAll({
+      where: {
+        code: codes,
       }
     });
   }
