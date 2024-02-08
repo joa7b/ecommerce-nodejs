@@ -74,7 +74,6 @@ describe('productsController', () => {
     const product: Product = await controller.createProduct(productParams);
     const updatedProduct: Product = await controller.updateProduct(
       {
-        code: product.code,
         name: 'Product 2',
         description: 'Description 2',
         price: 200,

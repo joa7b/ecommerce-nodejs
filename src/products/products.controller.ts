@@ -4,13 +4,16 @@ import { Product } from './models/product.model';
 
 import { ProductsService } from './products.service';
 
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+
 @Controller('api/products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) { }
 
   @Post()
   async createProduct(
-    @Body() createProductDto: any
+    @Body() createProductDto: CreateProductDto
   ): Promise<Product> {
     try {
       return await this.productsService.createProduct(createProductDto);
@@ -41,7 +44,7 @@ export class ProductsController {
 
   @Put(':code')
   async updateProduct(
-    @Body() updateProductDto: any,
+    @Body() updateProductDto: UpdateProductDto,
     @Param('code') code: number,
   ): Promise<Product> {
     try {
